@@ -1,0 +1,3 @@
+class RequestCancelledException implements Exception{
+
+}

@@ -1,0 +1,1 @@
+enum HttpVerb { POST, GET, DELETE, PUT, HEAD,PATCH }
