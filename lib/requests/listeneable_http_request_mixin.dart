@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dhttp/requests/request_cancelled_exception.dart';
 import 'package:http/http.dart' as http;
 import 'cancellation_token.dart';
 
@@ -21,10 +22,10 @@ mixin ListeneableHttpRequestMixin {
           onProgress(bytes, total);
         }
         if (cancellationToken != null && cancellationToken.cancelled) {
-          throw Exception("request cancelled");
+          throw RequestCancelledException("request cancelled");
         }
         sink.add(data);
-      },
+      }
     );
     final stream = byteStream.transform(t);
     return http.ByteStream(stream);

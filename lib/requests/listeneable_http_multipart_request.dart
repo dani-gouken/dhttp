@@ -17,12 +17,6 @@ class ListeneableHttpMultipartRequest extends http.MultipartRequest
           onProgress: (byte, total) {
             progressListener.onProgress(byte, total);
           },
-          onDone: () {
-            progressListener.complete();
-          },
-          onError: () {
-            progressListener.cancel();
-          },
           cancellationToken: cancellationToken);
     }
     return addListenerToStream(cancellationToken: cancellationToken);

@@ -5,6 +5,7 @@ import 'package:dhttp/requests/abstract_request.dart';
 class Request extends AbstractRequest{
   String _url;
   HttpVerb _method;
+
   Request(String url,HttpVerb method,{Map<String,String> params,dynamic body,Map<String,String> headers}){
     this._url = url;
     this._method = method;
@@ -12,6 +13,7 @@ class Request extends AbstractRequest{
         .addHeaders(headers ?? Map<String,String>())
         .addParams(params ?? Map<String,String>());
   }
+  
   @override
   parseResult(ParsedBody response) {
     return response.data;
@@ -23,7 +25,7 @@ class Request extends AbstractRequest{
   @override
   HttpVerb get verb => this._method;
 
-  Request.post(String url,{dynamic body,Map<String,String> headers}){
+  Request.post(String url,{dynamic body,Map<String,String> headers,Map<String,String> params}){
     this._url = url;
     this.withBody(body ?? Map<String,String>())
         .addHeaders(headers ?? Map<String,String>())
@@ -31,14 +33,14 @@ class Request extends AbstractRequest{
     this._method = HttpVerb.POST;
   }
 
-  Request.delete(String url,{Map<String,String> headers}){
+  Request.delete(String url,{Map<String,String> headers,Map<String,String> params}){
     this._url = url;
     this.addHeaders(headers ?? Map<String,String>())
         .addParams(params ?? Map<String,String>());
     this._method = HttpVerb.DELETE;
   }
 
-  Request.put(String url,{dynamic body,Map<String,String> headers}){
+  Request.put(String url,{dynamic body,Map<String,String> headers,Map<String,String> params}){
     this._url = url;
     this.withBody(body ?? Map<String,String>())
         .addHeaders(headers ?? Map<String,String>())
@@ -46,7 +48,7 @@ class Request extends AbstractRequest{
     this._method = HttpVerb.PUT;
   }
 
-  Request.patch(String url,{dynamic body,Map<String,String> headers}){
+  Request.patch(String url,{dynamic body,Map<String,String> headers,Map<String,String> params}){
     this._url = url;
     this.withBody(body ?? Map<String,String>())
         .addHeaders(headers ?? Map<String,String>())
@@ -54,7 +56,7 @@ class Request extends AbstractRequest{
     this._method = HttpVerb.PATCH;
   }
 
-  Request.get(String url,{Map<String,String> headers}){
+  Request.get(String url,{Map<String,String> headers,Map<String,String> params}){
     this._url = url;
     this.addHeaders(headers ?? Map<String,String>())
         .addParams(params ?? Map<String,String>());

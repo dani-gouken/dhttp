@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dhttp/request_sender/i_request_sender.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as httpTest;

@@ -9,6 +9,8 @@ class ProgressListener {
     }
     return length / expectedLenght;
   }
+  get cancelled => _cancelled;
+  get completed => _completed;
 
   double get progressPercentage =>
       (double.parse(progress.toStringAsFixed(2)) * 100);
