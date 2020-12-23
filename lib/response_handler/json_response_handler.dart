@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:dhttp/requests/abstract_request.dart';
-import 'package:http/http.dart' as http;
-import '../parsed_body.dart';
+import 'package:dhttp/response.dart';
+import '../parsed_response.dart';
 import 'i_response_handler.dart';
 
 class JsonResponseHandler extends IResponseHandler {
   @override
-  handle(AbstractRequest request, http.Response response) {
-    return ParsedBody(jsonDecode(response.body), response);
+  handle(AbstractRequest request, Response response) {
+    return ParsedResponse(jsonDecode(response.body), response);
   }
 }

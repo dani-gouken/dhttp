@@ -4,7 +4,9 @@ import 'package:dhttp/request_sender/i_request_sender.dart';
 import 'package:dhttp/requests/abstract_request.dart';
 import 'package:dhttp/requests/listeneable_http_multipart_request.dart';
 import 'package:dhttp/requests/listeneable_request.dart';
+import 'package:dhttp/response.dart';
 import 'package:dhttp/response_handler/i_response_handler.dart';
+import 'package:dhttp/scheme.dart';
 import 'package:dhttp/utils.dart';
 import 'package:http/http.dart' as http;
 import 'body_encoder/i_body_encoder.dart';
@@ -19,6 +21,7 @@ abstract class AbstractHttpClient implements IHttpClient {
   IRequestSender get sender;
   Map<String, String> get headers => {};
   Map<String, String> get queryParams => {};
+  Scheme scheme = Scheme.HTTP;
 
   Future<T> process<T>(AbstractRequest request) async {
     http.StreamedResponse streamedResponse = await _sendRequest(request);
@@ -32,7 +35,13 @@ abstract class AbstractHttpClient implements IHttpClient {
     http.Response response = _responsefromStream(streamedResponse, bytes);
     final url = _makeUrl(request);
     _logResponse(url, response);
-    return request.parseResult(responseHandler.handle(request, response)) as T;
+    return request.parseResult(responseHandler.handle(
+        request,
+        Response(response.body, response.statusCode,
+            isRedirect: response.isRedirect,
+            headers: response.headers,
+            reasonPhrase: response.reasonPhrase,
+            persistentConnection: response.persistentConnection))) as T;
   }
 
   http.Response _responsefromStream(
@@ -46,6 +55,10 @@ abstract class AbstractHttpClient implements IHttpClient {
   }
 
   Uri _makeUrl(AbstractRequest request) {
+    if (this.scheme == Scheme.HTTP) {
+      return Uri.http(
+          host, prefix + request.url, request.params..addAll(queryParams));
+    }
     return Uri.https(
         host, prefix + request.url, request.params..addAll(queryParams));
   }
@@ -60,6 +73,7 @@ abstract class AbstractHttpClient implements IHttpClient {
         body: ${request.body},
     ''');
   }
+
   void log(String message);
   void _logResponse(Uri url, http.Response response) {
     log('''
@@ -85,7 +99,7 @@ abstract class AbstractHttpClient implements IHttpClient {
         httpRequest.bodyFields = encodedBody;
       }
       httpRequest.headers.addAll(requestHeaders);
-      return await sender.send(httpRequest);
+      return await sender.send(request, httpRequest);
     } else {
       ListeneableHttpMultipartRequest multipartRequest =
           ListeneableHttpMultipartRequest(verbString, url,
@@ -94,7 +108,7 @@ abstract class AbstractHttpClient implements IHttpClient {
       multipartRequest.headers.addAll(requestHeaders);
       multipartRequest.files.addAll(request.files);
       multipartRequest.fields.addAll(request.body);
-      return await sender.send(multipartRequest);
+      return await sender.send(request, multipartRequest);
     }
   }
 
@@ -111,5 +125,4 @@ abstract class AbstractHttpClient implements IHttpClient {
   _makeHeaders(AbstractRequest request) {
     return request.headers..addAll(headers);
   }
-
 }

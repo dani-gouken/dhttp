@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 class TestRequestWithCancellationToken extends AbstractRequest with Cancellation {
   @override
-  parseResult(ParsedBody response) {}
+  parseResult(ParsedResponse response) {}
 
   @override
   String get url => "foo";

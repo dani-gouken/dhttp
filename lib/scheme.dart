@@ -1,0 +1,4 @@
+enum Scheme{
+  HTTPS,
+  HTTP
+}

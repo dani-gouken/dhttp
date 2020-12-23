@@ -2,7 +2,7 @@ import 'package:dhttp/dhttp.dart';
 
 class TestRequest extends AbstractRequest{
   @override
-  parseResult(ParsedBody response) {
+  parseResult(ParsedResponse response) {
   return response.data;
   }
 

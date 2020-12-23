@@ -3,7 +3,7 @@ import 'package:dhttp/requests/progress_listener.dart';
 import 'package:dhttp/utils.dart';
 import 'package:http/http.dart';
 import '../http_verb.dart';
-import '../parsed_body.dart';
+import '../parsed_response.dart';
 import 'cancellation_token.dart';
 
 abstract class AbstractRequest {
@@ -57,7 +57,7 @@ abstract class AbstractRequest {
   }
 
 
-  dynamic parseResult(ParsedBody response);
+  dynamic parseResult(ParsedResponse response);
 
   bool get canHaveBody {
     switch (verb) {

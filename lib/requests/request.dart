@@ -1,4 +1,4 @@
-import 'package:dhttp/parsed_body.dart';
+import 'package:dhttp/parsed_response.dart';
 import 'package:dhttp/http_verb.dart';
 import 'package:dhttp/requests/abstract_request.dart';
 
@@ -15,7 +15,7 @@ class Request extends AbstractRequest{
   }
   
   @override
-  parseResult(ParsedBody response) {
+  parseResult(ParsedResponse response) {
     return response.data;
   }
 

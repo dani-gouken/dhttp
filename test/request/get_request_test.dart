@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 class TestRequest extends GetRequest{
   @override
-  parseResult(ParsedBody response) {
+  parseResult(ParsedResponse response) {
     return ;
   }
   @override

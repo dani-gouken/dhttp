@@ -24,6 +24,6 @@ class HttpClient extends AbstractHttpClient{
   IRequestSender get sender => _requestSender;
   @override
   void log(String message) {
-  }
+  } 
 
 }

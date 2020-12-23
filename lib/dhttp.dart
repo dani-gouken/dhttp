@@ -7,7 +7,7 @@ export './body_encoder/i_body_encoder.dart';
 export './json_http_client.dart';
 export './response_handler/json_response_handler.dart';
 export './response_handler/i_response_handler.dart';
-export './parsed_body.dart';
+export 'parsed_response.dart';
 export './http_verb.dart';
 export './requests/get_request.dart';
 export './requests/post_request.dart';
